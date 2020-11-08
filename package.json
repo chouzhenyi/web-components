@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "dev": "vue-cli-service serve",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "test:e2e": "vue-cli-service test:e2e",
@@ -28,10 +29,13 @@
     "babel-plugin-component": "^1.1.1",
     "chai": "^4.1.2",
     "chromedriver": "86",
+    "element-ui": "^2.14.0",
     "geckodriver": "^1.20.0",
     "sass": "^1.26.5",
     "sass-loader": "^8.0.2",
     "typescript": "~3.9.3",
-    "vue-template-compiler": "^2.6.11"
+    "vue-draggable": "^2.0.6",
+    "vue-template-compiler": "^2.6.11",
+    "vuedraggable": "^2.24.3"
   }
 }
