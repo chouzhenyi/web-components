@@ -9,7 +9,7 @@
       </div>
     </div>
     <el-checkbox-group v-model="selects" @change="listCheckedChange">
-      <draggable v-model="list">
+      <draggable v-model="list" handle=".drag-handle">
         <transition-group>
           <div class="list-wrapper" v-for="(item, index) in list" :key="index">
             <div class="check-wrapper">
