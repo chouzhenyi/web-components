@@ -1,5 +1,6 @@
 <template>
   <div class="about">
-    关于算法
+    <div>塔希提球王！</div>
+    <section>123</section>
   </div>
 </template>
