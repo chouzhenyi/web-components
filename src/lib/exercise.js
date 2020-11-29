@@ -1,3 +1,4 @@
+import { blanksHandle } from "./exerciseMethods"
 function exerciseFactory({
   key = 1,
   LibraryID,
@@ -11,7 +12,7 @@ function exerciseFactory({
   TypeText,
   Body = '',
   Options,
-  Answers,
+  Answer,
   HasRemark,
   Remark = '',
   showScore = true,
@@ -35,9 +36,10 @@ function exerciseFactory({
   this.Body = Body
   this.complexBody = this.getComplexBody()
   this.Options = Options || []
-  this.Answers = Answers || [],
+  this.Answer = Answer || [],
   this.HasRemark = !HasRemark
   this.Remark = Remark
+  this.remarkFold = true
   this.showScore = !!showScore
   this.Score = Score
   this.score = score
@@ -60,7 +62,10 @@ function exerciseFactoryMethod(type, params) {
   if(this instanceof exerciseFactoryMethod) {
     const subClass = this[type]
     if(subClass) {
-      subClass.prototype = exerciseFactory.prototype
+      subClass.prototype = {
+        ...exerciseFactory.prototype
+      }
+      exerciseProtoMethod(type, subClass.prototype)
       return new subClass(params)
     } else {
       throw new Error('没有你需要的类')
@@ -70,18 +75,20 @@ function exerciseFactoryMethod(type, params) {
   }
 }
 
-// 单选题
 exerciseFactoryMethod.prototype = {
+  // 单选题
   SingleChoice(params = {}) {
     exerciseFactory.call(this, params)
     return this
   },
+  // 多选题
   MultipleChoice(params = {}) {
     exerciseFactory.call(this, params)
     const { HalfScore = 0 } = params
     this.HalfScore = HalfScore
     return this
   },
+  // 投票题
   Polling(params = {}) {
     exerciseFactory.call(this, params)
     const { voteMode = 0, PollingCount = 1, isScore, is_score } = params
@@ -89,9 +96,53 @@ exerciseFactoryMethod.prototype = {
     this.PollingCount = PollingCount
     this.isScore = isScore
     this.is_score = is_score
+    this.Answer = []
     return this
   },
-  // TODO: 填空、主观、判断
+  // 填空题
+  FillBlank(params = {}) {
+    exerciseFactory.call(this, params)
+    const { Blanks, OrderInsensitive } = params
+    this.Blanks = Blanks
+    this.OrderInsensitive = !!OrderInsensitive
+    this.Options = []
+
+    return this
+  },
+  // 主观题
+  ShortAnswer(params = {}) {
+    exerciseFactory.call(this, params)
+    const { AllowResults=[] } = params
+    this.AllowResults = AllowResults
+    this.Options = []
+    this.Answer = []
+    return this
+  },
+  // 判断题
+  Judgement(params = {}) {
+    exerciseFactory.call(this, params)
+    this.Options = [
+      {key: true, value: ""},
+      {key: false, value: ""}
+    ]
+    return this
+  }
+}
+ 
+// 给各个对象添加自己的方法
+function exerciseProtoMethod(type, target) {
+  let methods = {}
+  switch(type) {
+    case 'FillBlank':
+      methods = { blanksHandle }
+      break
+    default:
+      methods = {}
+      break
+  }
+  for (let i in methods) {
+    target[i] = methods[i]
+  }
 }
 
 export { exerciseFactoryMethod }

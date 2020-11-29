@@ -31,10 +31,7 @@ export default {
     },
     problemsHandle() {
       const list = this.fetchProblems()
-      return list.filter(item => {
-        const types = [1, 2, 3]
-        return types.indexOf(item.ProblemType)>-1
-      }).map((item, index) => {
+      return list.map((item, index) => {
         const key = index + 1
         const { Body, Type } = item
         return exerciseFactoryMethod(Type, {
