@@ -1,6 +1,19 @@
 <template>
-  <div class="about">
-    <div>塔希提球王！</div>
-    <section>123</section>
-  </div>
+  <div></div>
 </template>
+
+<script>
+export default {
+props: {},
+data() {
+return {}
+},
+computed: {},
+created() {},
+methods: {},
+
+}
+
+</script>
+<style lang="scss" scoped>
+</style>
