@@ -5,9 +5,11 @@ import store from './store'
 import {
   CheckboxGroup,
   Checkbox,
+  InputNumber,
 } from 'element-ui'
 Vue.component(Checkbox.name, Checkbox);
 Vue.component(CheckboxGroup.name, CheckboxGroup);
+Vue.component(InputNumber.name, InputNumber)
 
 Vue.config.productionTip = false
 

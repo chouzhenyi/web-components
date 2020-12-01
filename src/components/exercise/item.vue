@@ -30,10 +30,21 @@
         </div>
         <div v-html="item.Remark" v-show="!item.remarkFold"></div>
       </div>
-      <!-- TODO: 分数 -->
-      <!-- TODO: 多选题判分规则-->
-      <!-- TODO: 投票题是否匿名-->
-      <!-- TODO: 填空题分数-->
+      <div class="other-property-wrapper">
+        <!-- TODO: 投票题是否计分 -->
+        <!-- TODO: 分数 -->
+        <el-input-number
+          :controls="false"
+          v-model="item.Score"
+          :precision="1"
+          :step="0.5"
+          :max="100"
+          @change="scoreChange">
+        </el-input-number>
+        <!-- TODO: 多选题判分规则-->
+        <!-- TODO: 投票题是否匿名-->
+        <!-- TODO: 填空题分数列表-->
+      </div>
     </div>
   </div>
 </template>
@@ -62,6 +73,12 @@ export default {
   methods: {
     init() {
       this.list = [this.options]
+    },
+    scoreChange(score) {
+      this.$emit('scorechange', {
+        score,
+        inex: this.index
+      })
     },
   },
   filters: {
@@ -110,7 +127,9 @@ export default {
 $blue: #5096F5;
 .wrapper {
   position: relative;
-  padding-left: 30px;
+  margin-top: 20px; 
+  padding: 0 20px 0 30px;
+  border-bottom: 1px solid #c8c8c8;
   .item {
     position: relative;
     padding-bottom: 20px;
@@ -172,6 +191,9 @@ $blue: #5096F5;
         display: inline-block;
         cursor: pointer;
       }
+    }
+    .other-property-wrapper {
+      padding-top: 10px;
     }
   }
   &::before {
