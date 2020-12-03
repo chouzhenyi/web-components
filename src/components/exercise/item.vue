@@ -32,7 +32,7 @@
       </div>
       <div class="other-property-wrapper">
         <!-- TODO: 投票题是否计分 -->
-        <!-- TODO: 分数 -->
+        <!-- TODO: 分数 这里应该做二次封装，以符合设计需要 -->
         <el-input-number
           :controls="false"
           v-model="item.Score"
