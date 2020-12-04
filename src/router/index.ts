@@ -27,7 +27,12 @@ const routes: Array<RouteConfig> = [
     path: '/exercise',
     name: 'Exercise',
     component: () => import('../views/exercise.vue')
-  }, 
+  },
+  {
+    path: '/algorithm',
+    name: 'Algorithm',
+    component: () => import('../views/algorithm.vue')
+  },
 ]
 
 const router = new VueRouter({
