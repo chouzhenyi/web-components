@@ -9,7 +9,7 @@ import {
 import { setProtoMethods } from "./exerciseMethods"
 
 function exerciseBuilder(params = {}) {
-  const { Type } = params
+  const { Type, ProblemType } = params
   const factoryClasses = {
     SingleChoice,
     MultipleChoice,
@@ -19,9 +19,28 @@ function exerciseBuilder(params = {}) {
     Judgement,
   }
   const targetClass = factoryClasses[Type]
-  setProtoMethods(targetClass, 
+  // 每个习题item 都要有的方法
+  const commenMethods = [ 
     'setComplexBody',
-    'setScore')
+    'setScore'
+  ]
+  setProtoMethods(targetClass, ...commenMethods)
+
+  // 类型习题特有的方法
+  let problemSelfMethods = []
+  switch(ProblemType) {
+    case 2:
+      // 多选题
+      problemSelfMethods = ['setHalfScore', 'halfIsScoreChange']
+      break;
+    case 3:
+      // 投票题
+      problemSelfMethods = ['setIsScore']
+      break;
+    default:
+      break;
+  }
+  problemSelfMethods && problemSelfMethods.length && setProtoMethods(targetClass, ...problemSelfMethods)
 
   if(!!targetClass) {
     const result = new targetClass(params)

@@ -16,11 +16,24 @@ const MethodsStores = {
     let targetScore = scoreVerify(newScore)
     if(ProblemType === 3) {
       this.score = this.Score = targetScore || 0
-      this.is_score = this.isScore = +!!targetScore
     } else {
       this.score = this.Score = targetScore || 1
     }
-  }
+  },
+  // 少选是否计分变更
+  halfIsScoreChange(value) {
+    this.setHalfScore(+!!value)
+  },
+  // 多选题少选得分分数变更
+  setHalfScore(value) {
+    const score = Math.abs(+value || 0)
+    this.HalfScore = score > this.Score ? this.Score : score
+  },
+  // 投票题是否计分变更，带动分数重置
+  setIsScore(value) {
+    this.is_score = this.isScore = +!!value
+    this.setScore(value)
+  },
 }
 /**
  * 

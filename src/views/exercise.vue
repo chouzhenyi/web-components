@@ -2,7 +2,7 @@
   <div>
     <list-item v-for="(item, index) in list" :key="item.TemplateID"
       :index="index+1" :options="item"
-      @scorechange="scorechange"
+      @change="itemPropertyChange"
       >
     </list-item>
   </div>
@@ -40,10 +40,13 @@ export default {
         })
       })
     },
-    scorechange({score, index}) {
-      const problem = this.list.find(item => item.index == index)
-      problem.setScore(score)
-      console.log(problem);
+    itemPropertyChange({type, value, index}) {
+      const problem = this.list.find(item => item.key == index)
+      problem[type] && problem[type](value)
+      setTimeout(()=>{
+        
+        console.log(problem, {type, value, index});
+      })
     },
     fetchProblems() {
       const { data } = paperData

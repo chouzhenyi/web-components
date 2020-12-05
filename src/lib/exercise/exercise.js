@@ -58,14 +58,26 @@ class MultipleChoice extends exerciseFactory {
   constructor(params = {}) {
     super(params)
     const { HalfScore = 0 } = params
+    this.halfIsScore = +!!HalfScore
     this.HalfScore = HalfScore
+    this.scoreRules = [
+      {
+        value: 1,
+        label: "少选给部分分"
+      },
+      {
+        value: 0,
+        label: "少选不给分"
+      },
+    ]
   }
 }
 // 投票题
 class Polling extends exerciseFactory {
   constructor(params = {}) {
     super(params)
-    const { voteMode = 0, PollingCount = 1, isScore, is_score } = params
+    const { voteMode = 0, PollingCount = 1, isScore, is_score, Anonymous } = params
+    this.Anonymous = Anonymous
     this.voteMode = voteMode
     this.PollingCount = PollingCount
     this.isScore = isScore
