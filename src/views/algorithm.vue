@@ -2,7 +2,19 @@
   <div>
     <h1>雨！雷！！</h1>
     <div class="list-wrapper">
-      <div class="item" v-for="(item, index) in list" :key="index">{{item}}</div>
+      <h2>排序</h2>
+      <h3>原始数组</h3>
+      <div class="list-sort-wrapper">
+        <div class="item" v-for="(item, index) in list" :key="index">{{item}}</div>
+      </div>
+      <h3>选择</h3>
+      <div class="list-sort-wrapper">
+        <div class="item" v-for="(item, index) in selectionList" :key="index">{{item}}</div>
+      </div>
+      <h3>插入</h3>
+      <div class="list-sort-wrapper">
+        <div class="item" v-for="(item, index) in insertionList" :key="index">{{item}}</div>
+      </div>
     </div>
   </div>
 </template>
@@ -15,7 +27,9 @@ export default {
   props: {},
   data() {
     return {
-      list: []
+      list: [],
+      selectionList: [],
+      insertionList: [],
     };
   },
   computed: {},
@@ -25,20 +39,43 @@ export default {
   },
   methods: {
     init() {
+      // 排序
+      this.sort()
+
+    },
+    sort() {
       const list = this.creatNumList()
-      // 原始数据
-      console.log(list)
-      this.list = this.algorithmFatory.selection(list)
+      this.list = list
+      const { selection, insertion } = this.algorithmFatory
+      this.selectionList = selection(this.arrayCopy(list))
+      this.insertionList = insertion(this.arrayCopy(list))
     },
     creatNumList() {
       const list = []
       for(let i = 0; i < 10; i++) {
-        list.push(randomNum(20))
+        list.push(randomNum(200))
       }
       return list
-    }
+    },
+    arrayCopy(list) {
+      return [...list]
+    },
   },
 };
 </script>
 <style lang="scss" scoped>
+.list-sort-wrapper {
+  width: 100%;
+  display: inline-grid;
+  grid-template-columns: repeat(auto-fill, 50px);
+  grid-column-gap: 10px;
+  padding: 10px 0;
+  text-align: center;
+  color: #fff;
+  line-height: 24px;
+  font-size: 16px;
+  .item {
+    background: #5096f5;
+  }
+}
 </style>
