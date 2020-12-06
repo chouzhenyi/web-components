@@ -1,11 +1,26 @@
+// 方法装饰器
 function arrayDecorator() {
-  return function(target: Array<number>, propertyKey: string, descriptor: PropertyDescriptor) {
-    console.log(propertyKey)
+  return function(target: any, propertyKey: string, descriptor: PropertyDescriptor) {
+    const method = descriptor.value;
+    descriptor.value = function(...args: any[]) {
+      // 对参数处理，必须是number 数组
+      args = args.map(items => {
+        return items.map((item:any) => {
+          const value = +item
+          return value ? value : 0
+        })
+      })
+      // 调用方法的返回值
+      const result = method.apply(this, args)
+      // 返回调用函数的结果
+      return result instanceof Array ? result.length ? result : ['没有结果'] : ['结果不是数组']
+    }
   }
 }
 class algorithm {
   constructor() {
   }
+  @arrayDecorator()
   selection(list: Array<number>) {
     const len = list.length
     for(let i = 0; i < len; i++) {

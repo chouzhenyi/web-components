@@ -58,7 +58,8 @@ export default {
       this.list = list
       const factory = this.algorithmFactory
       const { selection, insertion, bubbleSort } = factory
-      this.selectionList = selection(this.arrayCopy(list))
+      // this.selectionList = selection(this.arrayCopy(list))
+      this.selectionList = selection([1, '39', 'wawa', false, {}, 11])
       this.insertionList = insertion(this.arrayCopy(list))
       this.bubbleList = bubbleSort(this.arrayCopy(list))
       this.mergeList = factory.mergeSort(this.arrayCopy(list))
