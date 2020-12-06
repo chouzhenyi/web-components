@@ -15,6 +15,14 @@
       <div class="list-sort-wrapper">
         <div class="item" v-for="(item, index) in insertionList" :key="index">{{item}}</div>
       </div>
+      <h3>冒泡</h3>
+      <div class="list-sort-wrapper">
+        <div class="item" v-for="(item, index) in bubbleList" :key="index">{{item}}</div>
+      </div>
+      <h3>归并</h3>
+      <div class="list-sort-wrapper">
+        <div class="item" v-for="(item, index) in mergeList" :key="index">{{item}}</div>
+      </div>
     </div>
   </div>
 </template>
@@ -30,11 +38,13 @@ export default {
       list: [],
       selectionList: [],
       insertionList: [],
+      bubbleList: [],
+      mergeList: [],
     };
   },
   computed: {},
   created() {
-    this.algorithmFatory = new algorithm([1])
+    this.algorithmFactory = new algorithm([1])
     this.init()
   },
   methods: {
@@ -46,9 +56,12 @@ export default {
     sort() {
       const list = this.creatNumList()
       this.list = list
-      const { selection, insertion } = this.algorithmFatory
+      const factory = this.algorithmFactory
+      const { selection, insertion, bubbleSort } = factory
       this.selectionList = selection(this.arrayCopy(list))
       this.insertionList = insertion(this.arrayCopy(list))
+      this.bubbleList = bubbleSort(this.arrayCopy(list))
+      this.mergeList = factory.mergeSort(this.arrayCopy(list))
     },
     creatNumList() {
       const list = []

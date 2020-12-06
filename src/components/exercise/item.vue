@@ -296,7 +296,7 @@ $blue: #5096F5;
     content: "";
     position: absolute;
     top: 0;
-    left: 0;
+    left: 4px;
     width: 4px;
     height: 20px;
     background: $blue;

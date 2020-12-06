@@ -33,6 +33,42 @@ class algorithm {
     }
     return list
   }
+  bubbleSort(list: Array<number>) {
+    const len = list.length
+    for(let i = 0; i < len; i++) {
+      for(let j = 0; j < len - 1 - i; j++) {
+        if(list[j] > list[j + 1]) {
+          [list[j], list[j + 1]] = [list[j + 1], list[j]]
+        }
+      }
+    }
+    return list
+  }
+  mergeSort(list: Array<number>):any {
+    const len = list.length
+    if(len <= 1) {
+      return list
+    }
+    const middleIndex = Math.floor(len/2)
+    return this.merge(this.mergeSort(list.slice(0 , middleIndex)), this.mergeSort(list.splice(middleIndex)))
+  }
+  merge(left: Array<number>, right: Array<number>) {
+    const list = []
+    while(left.length > 0 && right.length > 0) {
+      if(left[0] < right[0]) {
+        list.push(left.shift())
+      } else {
+        list.push(right.shift())
+      }
+    }
+    while(left.length > 0) {
+      list.push(left.shift())
+    }
+    while(right.length > 0) {
+      list.push(right.shift())
+    }
+    return list
+  }
 }
 
 
