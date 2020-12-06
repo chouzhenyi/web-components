@@ -1,7 +1,9 @@
 <template>
   <div>
     <div class="title">一个表格，携带checkbox 可拖动</div>
-    <z-table :options="listOptions"></z-table>
+    <div class="table-wrapper">
+      <z-table :options="listOptions"></z-table>
+    </div>
   </div>
 </template>
 
@@ -76,5 +78,9 @@ export default {
     line-height: 24px;
     font-size: 16px;
     text-align: center;
+  }
+  .table-wrapper {
+    width: 500px;
+    padding: 20px;
   }
 </style>

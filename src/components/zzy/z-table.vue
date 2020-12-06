@@ -9,8 +9,8 @@
       </div>
     </div>
     <el-checkbox-group v-model="selects" @change="listCheckedChange">
-      <draggable v-model="list" handle=".drag-handle">
-        <transition-group>
+      <draggable v-model="list" v-bind="dragOptions">
+        <transition-group type="transition">
           <div class="list-wrapper" v-for="(item, index) in list" :key="index">
             <div class="check-wrapper">
               <el-checkbox :key="item.id" :label="item.id"></el-checkbox>
@@ -52,8 +52,9 @@ export default {
     },
     dragOptions() {
       return {
+        animation: 200,
         dragClass: "drag-class",
-        handle: ".drag-handle"
+        handle: ".drag-handle",
       }
     }
   },
