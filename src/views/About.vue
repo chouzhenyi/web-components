@@ -19,6 +19,12 @@
     </transition-group>
     <input type="button" value="改变" @click="change">
     <!-- key 的作用 END -->
+
+    <!-- TODO: 打算学习
+      TS、ES6、vue 虚拟 dom、 diff算法
+      数据结构重新复习一遍、排序都熟悉一遍、
+      设计模式通过代码练手
+     -->
   </div>
 </template>
 
