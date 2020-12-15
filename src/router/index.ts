@@ -33,6 +33,11 @@ const routes: Array<RouteConfig> = [
     name: 'Algorithm',
     component: () => import('../views/algorithm.vue')
   },
+  {
+    path: '/music',
+    name: 'Music',
+    component: () => import('../views/music.vue')
+  },
 ]
 
 const router = new VueRouter({
