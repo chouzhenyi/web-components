@@ -300,7 +300,7 @@ $blue: #5096F5;
     content: "";
     position: absolute;
     top: 0;
-    left: 4px;
+    left: 0;
     width: 4px;
     height: 20px;
     background: $blue;
