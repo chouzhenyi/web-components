@@ -3,8 +3,8 @@
     <div class="item" v-for="(item, index) in list" :key="index">
       <!-- 题干 -->
       <div class="font18 type-text">{{item.TypeText}}</div>
-      <div class="body-wrapper item__complex-body-wrapper" v-html="item.Body"></div>
-      <section>
+      <div class="body-wrapper item__complex-body-wrapper" :class="{'body-fold': !batchoptions.isUnfold}" v-html="item.Body"></div>
+      <section v-show="batchoptions.isUnfold">
         <!-- 选项 -->
         <div class="options-wrapper">
           <div class="options__item-wrapper" 
@@ -108,6 +108,10 @@ export default {
     options: {
       type: Object,
       required: true
+    },
+    batchoptions: {
+      type: Object,
+      default: {}
     }
   },
   data() {
@@ -212,9 +216,13 @@ $blue: #5096F5;
     padding-bottom: 20px;
     .type-text {
       line-height: 20px;
+      margin-bottom: 20px;
     }
     .body-wrapper {
-
+      line-height: 1.2;
+      &.body-fold {
+        max-height: 36px;
+      }
     }
     .options-wrapper {
       padding: 20px 0;

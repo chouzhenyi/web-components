@@ -28,7 +28,7 @@
       </section>
     </div>
     <el-checkbox-group v-model="selects" @change="listCheckedChange">
-    <div class="table__item-wrapper" v-for="(item, index) in list" :key="item.template_id">
+    <div class="font14 table__item-wrapper" v-for="(item, index) in list" :key="item.template_id">
       <div class="select-item__checkbox-wrapper" v-show="isBatchChange">
         <el-checkbox :key="item.template_id" :label="item.template_id" :value="item.template_id"></el-checkbox>
       </div>
@@ -36,7 +36,7 @@
         <i class="iconfont icon--paixu2"></i>
       </div>
       <div class="item__inner-wrapper">
-        <list-item :index="index+1" :options="item" @change="itemPropertyChange"></list-item>
+        <list-item :index="index+1" :batchoptions="batchOptions" :options="item" @change="itemPropertyChange"></list-item>
       </div>
     </div>
     </el-checkbox-group>
@@ -64,6 +64,13 @@ export default {
       isBatchChange: false, // 是否批量操作习题 即：可勾选批量删除等
       isUnfold: false, // 是否展开习题
     };
+  },
+  computed: {
+    batchOptions() {
+      return {
+        isUnfold: this.isUnfold
+      }
+    }
   },
   created() {
     this.init()
