@@ -1,52 +1,6 @@
-class exerciseFactory {
-  constructor({
-    key = 1,
-    LibraryID,
-    library_id,
-    ProblemType = 1,
-    TemplateID,
-    template_id,
-    difficulty = 1,
-    max_retry = 1,
-    Type = 'SingleChoice',
-    TypeText,
-    Body = '',
-    Options,
-    Answer,
-    HasRemark,
-    Remark = '',
-    showScore = true,
-    Score = 1,
-    score = 1,
-    isEdit = false,
-    data = {},
-  
-  }){
-    score = Score
-    this.key = key
-    this.LibraryID = LibraryID
-    this.library_id = library_id
-    this.TemplateID = TemplateID
-    this.template_id = template_id
-    this.difficulty = difficulty
-    this.max_retry = max_retry
-    this.ProblemType = +ProblemType
-    this.Type = Type
-    this.TypeText = TypeText
-    this.Body = Body
-    this.Options = Options || []
-    this.Answer = Answer || [],
-    this.HasRemark = !HasRemark
-    this.Remark = Remark
-    this.remarkFold = true
-    this.showScore = !!showScore
-    this.Score = Score
-    this.score = score
-    this.isEdit = !!isEdit
-    this.data = data
-  }
-}
-
+import { exerciseFactory } from "./abstractExercise"
+import { scoreVerify } from "./verifyProperties"
+// 注：所有习题都需要继承抽象习题方法，包含通用的属性和方法
 // 单选题
 class SingleChoice extends exerciseFactory {
   constructor(params = {}) {
@@ -71,6 +25,15 @@ class MultipleChoice extends exerciseFactory {
       },
     ]
   }
+  // 多选题 少选是否计分变更
+  halfIsScoreChange(value) {
+    this.setHalfScore(+!!value)
+  }
+  // 多选题 少选得分分数变更以及校验 (不能比本题分数大)
+  setHalfScore(value) {
+    const score = scoreVerify(value)
+    this.HalfScore = score > this.Score ? this.Score : score
+  }
 }
 // 投票题
 class Polling extends exerciseFactory {
@@ -84,6 +47,11 @@ class Polling extends exerciseFactory {
     this.is_score = is_score
     this.Answer = []
   }
+  // 投票题 是否计分变更，带动分数重置
+  setIsScore(value) {
+    this.is_score = this.isScore = +!!value
+    this.setScore(value)
+  }
 }
 // 填空题
 class FillBlank extends exerciseFactory {
@@ -93,6 +61,16 @@ class FillBlank extends exerciseFactory {
     this.Blanks = Blanks
     this.OrderInsensitive = !!OrderInsensitive
     this.Options = []
+  }
+  calculateScore() {
+    const score = this.Blanks.reduce((total, item) => {
+      return total + item.Score
+    }, 0)
+    this.setScore(score)
+  }
+  blankScoreChange({index, score}) {
+    this.Blanks[index].score = this.Blanks[index].Score = scoreVerify(score)
+    this.calculateScore()
   }
 }
 // 主观题
@@ -115,11 +93,22 @@ class Judgement extends exerciseFactory {
   }
 }
 
-export {
-  SingleChoice,
-  MultipleChoice,
-  Polling,
-  FillBlank,
-  ShortAnswer,
-  Judgement,
+// 策略?
+function exerciseBuilder(params = {}) {
+  const { Type } = params
+  const factoryClasses = {
+    SingleChoice,
+    MultipleChoice,
+    Polling,
+    FillBlank,
+    ShortAnswer,
+    Judgement,
+  }
+  const targetClass = factoryClasses[Type]
+  if(!!targetClass) {
+    return new targetClass(params)
+  } else {
+    throw new Error('没有你需要的习题类')
+  }
 }
+export { exerciseBuilder }

@@ -38,7 +38,19 @@
               <i class="iconfont icon--paixu2 drag-handle"></i>
             </div>
             <div class="item__inner-wrapper">
-              <list-item :index="index+1" :batchoptions="batchOptions" :options="item" @change="itemPropertyChange"></list-item>
+              <div class="color-9b edit-del-move-wrapper">
+                <i class="iconfont icon-bianji" @click="editMoveDelHandle(0, index)"></i>
+                <i class="iconfont icon--shangshengEEED" @click="editMoveDelHandle(1, index)" v-show="index !== 0"></i>
+                <i class="iconfont icon--xiajiangEEED" @click="editMoveDelHandle(2, index)" v-show="index !== listLen - 1"></i>
+                <i class="iconfont icon-shanchu-" @click="editMoveDelHandle(3, index)"></i>
+              </div>
+              <list-item :index="index+1" :batchoptions="batchOptions" :options="item" @change="itemPropertyChange" :key="item.template_id"></list-item>
+              <div class="color50 text-center insert-exercise-wrapper">
+                <span class="pointer">
+                  <i class="iconfont icon--tianjiabanji ver-middle"></i>
+                  <span class="font12 ver-middle">点击此处添加习题</span>
+                </span>
+              </div>
             </div>
           </div>
         </transition-group>
@@ -67,7 +79,7 @@ export default {
       checkAll: false,
       selects: [],
       isBatchChange: false, // 是否批量操作习题 即：可勾选批量删除等
-      isUnfold: false, // 是否展开习题
+      isUnfold: true, // 是否展开习题
     };
   },
   computed: {
@@ -83,7 +95,10 @@ export default {
         handle: ".drag-handle",
         tag: 'div',
       }
-    }
+    },
+    listLen() {
+      return this.list.length
+    },
   },
   created() {
     this.init()
@@ -91,15 +106,12 @@ export default {
   methods: {
     init() {
       this.list = this.inputListDataAdjust(this.exercises)
-      console.log(this.list)
     },
+    // 根据传入的type 调用当前习题对象的方法
     itemPropertyChange({type, value, index}) {
       const problem = this.list.find(item => item.key == index)
       problem[type] && problem[type](value)
-      setTimeout(()=>{
-        
-        console.log(problem, {type, value, index});
-      })
+      console.log(problem, {type, value, index});
     },
     // 全选
     checkAllChange(val) {
@@ -115,7 +127,7 @@ export default {
       this.checkAll = count === this.list.length
       this.isIndeterminate = count > 0 && count < len
     },
-    // 批量删除
+    // 删除
     delItems() {
       const selectLen = this.selects.length
       const listLen = this.list.length
@@ -126,6 +138,27 @@ export default {
         return this.selects.indexOf(item.template_id) < 0
       })
       this.list = this.problemsIndexHandle(list)
+    },
+    editMoveDelHandle(type, index) {
+      const item = this.list[index]
+      console.log(item)
+      switch(type) {
+        case 0:
+          // TODO: 编辑
+          console.log('编辑')
+          break;
+        case 1: // 上移
+          this.$set(this.list, index, this.list[index - 1])
+          this.$set(this.list, index - 1, item)
+          break;
+        case 2: // 下移
+          this.$set(this.list, index, this.list[index + 1])
+          this.$set(this.list, index + 1, item)
+          break;
+        case 3:
+          this.list.splice(index, 1)
+          break;
+      }
     },
   },
   components: {
@@ -143,6 +176,7 @@ export default {
 .table-header {
   display: flex;
   padding: 16px 20px 20px 20px;
+  border-bottom: 1px solid #ddd;
 }
 .table-batch-header {
   .item {
@@ -169,7 +203,7 @@ export default {
 .table__item-wrapper {
   flex: 1;
   display: flex;
-  margin-bottom: 20px;
+  padding-top: 20px;
   border-bottom: 1px solid #c8c8c8;
   .select-item__checkbox-wrapper, .select-item__drag-wrapper {
     height: 20px;
@@ -182,7 +216,30 @@ export default {
     }
   }
   .item__inner-wrapper {
+    position: relative;
     flex: 1;
+    .edit-del-move-wrapper {
+      position: absolute;
+      top: 0;
+      right: 20px;
+      z-index: 1;
+      i {
+        cursor: pointer;
+        padding: 10px;
+      }
+    }
+  }
+  .insert-exercise-wrapper {
+    border: 1px dashed $blue50;
+    height: 24px;
+    line-height: 24px;
+    margin-right: 20px;
+    visibility: hidden;
+  }
+  &:hover {
+    .insert-exercise-wrapper {
+      visibility: visible;
+    }
   }
 }
 .table-header {

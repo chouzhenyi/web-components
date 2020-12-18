@@ -1,4 +1,4 @@
-import { exerciseBuilder } from '../libs/exerciseBuilder'
+import { exerciseBuilder } from '../libs/exercise'
 export default {
   methods: {
     // 输入习题数据整理

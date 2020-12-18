@@ -54,12 +54,12 @@
           <!-- 分数 -->
           <div class="other-property-item-wrapper" v-show="item.ProblemType !== 3 || item.ProblemType === 3 && !!item.isScore">
             <div class="inline-block font14 color3 exercise__item-label">本题分值</div>
-            <score v-model="item.Score" @change="scoreChange"></score>
+            <score v-model="item.Score" @change="scoreChange" :can-edit="item.ProblemType!==4" />
           </div>
           <!-- 多选题判分规则-->
           <div class="other-property-item-wrapper" v-if="item.ProblemType === 2">
             <div class="inline-block font14 color3 exercise__item-label">判分规则</div>
-            <div class="inline-block">
+            <div class="inline-block muti-select-score-rules-wrapper">
               <el-select v-model="item.halfIsScore" popper-class="other-property-item__half-score" @change="halfIsScoreChange">
                 <el-option
                   v-for="item in item.scoreRules"
@@ -71,7 +71,7 @@
             </div>
             <div class="inline-block multi-half-wrapper" v-show="item.halfIsScore">
               <span class="font14 color6">少选得分：</span>
-              <score v-model="item.HalfScore" @change="halfScoreChange"></score>
+              <score v-model="item.HalfScore" @change="halfScoreChange" />
             </div>
           </div>
           <!-- 投票题是否匿名 -->
@@ -87,7 +87,13 @@
               </span>
             </div>
           </div>
-          <!-- TODO: 填空题分数列表-->
+          <template v-if="item.ProblemType === 4">
+            <!-- TODO: 这里可能需要给每个空添加一个unionid -->
+            <div v-for="(blankItem, blankIndex) in item.Blanks" :key="blankIndex" class="other-property-item-wrapper">
+              <div class="inline-block font14 color3 exercise__item-label">填空{{blankIndex + 1}}</div>
+              <score v-model="blankItem.Score" @change="blankScoreChange(blankIndex, blankItem.Score)" />
+            </div>
+          </template>
         </div>
       </section>
     </div>
@@ -154,6 +160,16 @@ export default {
         value: val,
       })
     },
+    // 填空题单个空的分数变更
+    blankScoreChange(index, score) {
+      this.eventTrigger({
+        type: "blankScoreChange",
+        value: {
+          index,
+          score,
+        }
+      })
+    },
     eventTrigger(params) {
       this.$emit('change', {
         ...params,
@@ -210,10 +226,10 @@ export default {
 $blue: #5096F5;
 .wrapper {
   position: relative;
-  padding: 0 20px 0 10px;
+  padding: 0 20px;
   .item {
     position: relative;
-    padding-bottom: 20px;
+    padding-bottom: 15px;
     .type-text {
       line-height: 20px;
       margin-bottom: 20px;
@@ -225,11 +241,10 @@ $blue: #5096F5;
       }
     }
     .options-wrapper {
-      padding: 20px 0;
       border-bottom: 1px dashed #ddd;
       .options__item-wrapper {
         display: flex;
-        margin-bottom: 20px;
+        margin: 20px 0;
         line-height: 32px;
         font-size: 14px;
         .option-key {
@@ -295,11 +310,41 @@ $blue: #5096F5;
           line-height: 34px;
           font-weight: 500;
         }
+        .muti-select-score-rules-wrapper {
+          ::v-deep {
+            .el-input {
+              border: 1px solid #ddd;
+              border-radius: 4px;
+            }
+            .el-input__inner {
+              height: 32px;
+              line-height: 32px;
+              border: none;
+            }
+            .el-select .el-input .el-select__caret {
+              color: #ddd;
+            }
+            .el-input__icon {
+              line-height: 32px;
+            }
+          }
+        }
         .multi-half-wrapper {
           padding-left: 10px;
         }
         .anonymous-tips{
           padding-left: 10px;
+        }
+        &:last-child {
+          padding-bottom: 0;
+        }
+      }
+    }
+    .blanks-list-wrapper {
+      .blank-item-wrapper {
+        display: flex;
+        .blank-label {
+          width: 114px;
         }
       }
     }
@@ -344,7 +389,9 @@ $blue: #5096F5;
     border-color: $blue50;
   }
 }
-.other-property-item__half-score .el-select-dropdown__item.selected {
-  color: $blue50;
+.other-property-item__half-score {
+  .el-select-dropdown__item.selected {
+    color: $blue50;
+  }
 }
 </style>
