@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper">
+  <div class="font16 wrapper">
     <div class="item" v-for="(item, index) in list" :key="index">
       <!-- 题干 -->
       <div class="font18 type-text">{{item.TypeText}}</div>

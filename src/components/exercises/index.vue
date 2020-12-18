@@ -28,17 +28,21 @@
       </section>
     </div>
     <el-checkbox-group v-model="selects" @change="listCheckedChange">
-    <div class="font14 table__item-wrapper" v-for="(item, index) in list" :key="item.template_id">
-      <div class="select-item__checkbox-wrapper" v-show="isBatchChange">
-        <el-checkbox :key="item.template_id" :label="item.template_id" :value="item.template_id"></el-checkbox>
-      </div>
-      <div class="select-item__drag-wrapper pointer" v-show="!isBatchChange">
-        <i class="iconfont icon--paixu2"></i>
-      </div>
-      <div class="item__inner-wrapper">
-        <list-item :index="index+1" :batchoptions="batchOptions" :options="item" @change="itemPropertyChange"></list-item>
-      </div>
-    </div>
+      <draggable v-model="list" v-bind="dragOptions">
+        <transition-group type="transition">
+          <div class="back-f table__item-wrapper" v-for="(item, index) in list" :key="item.template_id">
+            <div class="select-item__checkbox-wrapper" v-show="isBatchChange">
+              <el-checkbox :key="item.template_id" :label="item.template_id" :value="item.template_id"></el-checkbox>
+            </div>
+            <div class="select-item__drag-wrapper pointer" v-show="!isBatchChange">
+              <i class="iconfont icon--paixu2 drag-handle"></i>
+            </div>
+            <div class="item__inner-wrapper">
+              <list-item :index="index+1" :batchoptions="batchOptions" :options="item" @change="itemPropertyChange"></list-item>
+            </div>
+          </div>
+        </transition-group>
+      </draggable>
     </el-checkbox-group>
   </div>
 </template>
@@ -46,6 +50,7 @@
 <script>
 import listItem from "./item"
 import decoratorMixin from "./mixins/decorator.mixin"
+import draggable from 'vuedraggable'
 
 export default {
   name: "exercises",
@@ -69,6 +74,14 @@ export default {
     batchOptions() {
       return {
         isUnfold: this.isUnfold
+      }
+    },
+    dragOptions() {
+      return {
+        animation: 500,
+        dragClass: "drag-class",
+        handle: ".drag-handle",
+        tag: 'div',
       }
     }
   },
@@ -117,6 +130,7 @@ export default {
   },
   components: {
     listItem,
+    draggable,
   },
   mixins: [
     decoratorMixin,
@@ -153,6 +167,7 @@ export default {
   }
 }
 .table__item-wrapper {
+  flex: 1;
   display: flex;
   margin-bottom: 20px;
   border-bottom: 1px solid #c8c8c8;
@@ -165,6 +180,9 @@ export default {
     ::v-deep .el-checkbox .el-checkbox__label {
       display: none;
     }
+  }
+  .item__inner-wrapper {
+    flex: 1;
   }
 }
 .table-header {
@@ -183,5 +201,9 @@ export default {
   ::v-deep .el-checkbox__label {
     line-height: 1;
   }
+}
+
+.drag-class {
+  box-shadow: 0px 4px 10px rgba($color: #000, $alpha: .4);
 }
 </style>
