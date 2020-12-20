@@ -23,6 +23,10 @@
       <div class="list-sort-wrapper">
         <div class="item" v-for="(item, index) in mergeList" :key="index">{{item}}</div>
       </div>
+      <h3>快速</h3>
+      <div class="list-sort-wrapper">
+        <div class="item" v-for="(item, index) in quickList" :key="index">{{item}}</div>
+      </div>
     </div>
   </div>
 </template>
@@ -40,6 +44,7 @@ export default {
       insertionList: [],
       bubbleList: [],
       mergeList: [],
+      quickList: [],
     };
   },
   computed: {},
@@ -51,18 +56,20 @@ export default {
     init() {
       // 排序
       this.sort()
-
     },
     sort() {
       const list = this.creatNumList()
       this.list = list
       const factory = this.algorithmFactory
-      const { selection, insertion, bubbleSort } = factory
-      // this.selectionList = selection(this.arrayCopy(list))
-      this.selectionList = selection([1, '39', 'wawa', false, {}, 11])
+      const { selection, insertion, bubbleSort, quickSort } = factory
+      this.selectionList = selection(this.arrayCopy(list))
       this.insertionList = insertion(this.arrayCopy(list))
       this.bubbleList = bubbleSort(this.arrayCopy(list))
       this.mergeList = factory.mergeSort(this.arrayCopy(list))
+
+      const quickSortList = this.arrayCopy(list)
+      this.quickList = quickSort(quickSortList, 0, quickSortList.length - 1)
+
     },
     creatNumList() {
       const list = []

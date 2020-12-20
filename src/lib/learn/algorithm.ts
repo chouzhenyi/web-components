@@ -17,6 +17,56 @@ function arrayDecorator() {
     }
   }
 }
+// 归并排序，排序
+function merge(left: Array<number>, right: Array<number>) {
+  const list = []
+  while(left.length > 0 && right.length > 0) {
+    if(left[0] < right[0]) {
+      list.push(left.shift())
+    } else {
+      list.push(right.shift())
+    }
+  }
+  while(left.length > 0) {
+    list.push(left.shift())
+  }
+  while(right.length > 0) {
+    list.push(right.shift())
+  }
+  return list
+}
+
+// 快速排序，寻找中间位置
+function partition(list: Array<number>, left: number, right: number) {
+  const pivot = list[Math.floor((left + right)/2)]
+  let i = left
+  let j = right
+  while(i < j) {
+    while(list[i] < pivot) {
+      i++
+    }
+    while(list[j] > pivot) {
+      j--
+    }
+    if(i <= j) {
+      [list[i], list[j]] = [list[j], list[i]]
+      i++
+      j--
+    }
+  }
+  return i
+}
+function quick(list: Array<number>, left: number, right: number) {
+  if (list.length) {
+    const index = partition(list, left, right)
+    if (left < index - 1) {
+      quick(list, left, index - 1)
+    }
+    if (index < right) {
+      quick(list, index, right)
+    }
+  }
+}
 class algorithm {
   constructor() {
   }
@@ -65,23 +115,10 @@ class algorithm {
       return list
     }
     const middleIndex = Math.floor(len/2)
-    return this.merge(this.mergeSort(list.slice(0 , middleIndex)), this.mergeSort(list.splice(middleIndex)))
+    return merge(this.mergeSort(list.slice(0 , middleIndex)), this.mergeSort(list.splice(middleIndex)))
   }
-  merge(left: Array<number>, right: Array<number>) {
-    const list = []
-    while(left.length > 0 && right.length > 0) {
-      if(left[0] < right[0]) {
-        list.push(left.shift())
-      } else {
-        list.push(right.shift())
-      }
-    }
-    while(left.length > 0) {
-      list.push(left.shift())
-    }
-    while(right.length > 0) {
-      list.push(right.shift())
-    }
+  quickSort(list: Array<number>, left: number, right: number) {
+    quick(list, left, right)
     return list
   }
 }
