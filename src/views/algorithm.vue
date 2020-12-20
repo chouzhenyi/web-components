@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>雨！雷！！</h1>
+    <h1>小排排</h1>
     <div class="list-wrapper">
       <h2>排序</h2>
       <h3>原始数组</h3>

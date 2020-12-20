@@ -34,6 +34,11 @@ const routes: Array<RouteConfig> = [
     component: () => import('../views/algorithm.vue')
   },
   {
+    path: '/data-structure',
+    name: 'DataStructure',
+    component: () => import('../views/data-structure.vue')
+  },
+  {
     path: '/music',
     name: 'Music',
     component: () => import('../views/music.vue')
