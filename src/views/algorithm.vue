@@ -15,6 +15,10 @@
       <div class="list-sort-wrapper">
         <div class="item" v-for="(item, index) in insertionList" :key="index">{{item}}</div>
       </div>
+      <h3>希尔</h3>
+      <div class="list-sort-wrapper">
+        <div class="item" v-for="(item, index) in shellList" :key="index">{{item}}</div>
+      </div>
       <h3>冒泡</h3>
       <div class="list-sort-wrapper">
         <div class="item" v-for="(item, index) in bubbleList" :key="index">{{item}}</div>
@@ -45,6 +49,8 @@ export default {
       bubbleList: [],
       mergeList: [],
       quickList: [],
+      shellList: [],
+
     };
   },
   computed: {},
@@ -61,7 +67,7 @@ export default {
       const list = this.creatNumList()
       this.list = list
       const factory = this.algorithmFactory
-      const { selection, insertion, bubbleSort, quickSort } = factory
+      const { selection, insertion, bubbleSort, quickSort, shellSort } = factory
       this.selectionList = selection(this.arrayCopy(list))
       this.insertionList = insertion(this.arrayCopy(list))
       this.bubbleList = bubbleSort(this.arrayCopy(list))
@@ -69,6 +75,9 @@ export default {
 
       const quickSortList = this.arrayCopy(list)
       this.quickList = quickSort(quickSortList, 0, quickSortList.length - 1)
+
+      // 希尔排序
+      this.shellList = shellSort(this.arrayCopy(list))
 
     },
     creatNumList() {

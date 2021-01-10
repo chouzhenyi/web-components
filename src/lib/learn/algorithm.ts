@@ -98,6 +98,28 @@ class algorithm {
     }
     return list
   }
+  shellSort(list: Array<number>) {
+    const len = list.length
+    // 1、确定间隔
+    let gap = 1
+    while(gap < len/3) {
+      gap = gap * 3 + 1
+    }
+    // 2、间隔不断缩小
+    for(gap; gap > 0; gap = Math.floor(gap/3)) {
+      for(let i = gap; i < len; i++) {
+        // 3、认为前项是已经排序好的序列，将当前项插入到合适位置 
+        let temp = list[i]
+        let prevIndex = i - gap
+        while(prevIndex >=0 && list[prevIndex] > temp) {
+          list[prevIndex + gap] = list[prevIndex]
+          prevIndex-= gap
+        }
+        list[prevIndex + gap] = temp
+      }
+    }
+    return list
+  }
   bubbleSort(list: Array<number>) {
     const len = list.length
     for(let i = 0; i < len; i++) {
