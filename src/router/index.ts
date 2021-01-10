@@ -43,6 +43,11 @@ const routes: Array<RouteConfig> = [
     name: 'Music',
     component: () => import('../views/music.vue')
   },
+  {
+    path: '/design',
+    name: 'Design',
+    component: () => import('../views/design.vue')
+  },
 ]
 
 const router = new VueRouter({
