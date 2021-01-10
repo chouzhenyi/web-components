@@ -12,7 +12,7 @@ function calculationClass(target: any) {
 }
 // 访问器装饰器
 function strGetter(target: any, propertyKey: string, descriptor: PropertyDescriptor) {
-  console.log('访问器装饰器应用于访问器的属性描述符，可用于观测、修改、替换访问器的定义。')
+  // console.log('访问器装饰器应用于访问器的属性描述符，可用于观测、修改、替换访问器的定义。')
   descriptor.enumerable = true
   descriptor.configurable = false
 }

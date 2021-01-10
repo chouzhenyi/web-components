@@ -9,7 +9,7 @@
     "experimentalDecorators": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
+    "allowSyntheticDefaultImports": false,
     "sourceMap": true,
     "baseUrl": ".",
     "types": [
@@ -35,7 +35,7 @@
     "src/**/*.vue",
     "tests/**/*.ts",
     "tests/**/*.tsx"
-  ],
+, "src/lib/learn/structure/linkedList.js"  ],
   "exclude": [
     "node_modules"
   ]

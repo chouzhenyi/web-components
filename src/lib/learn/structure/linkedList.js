@@ -1,14 +1,10 @@
 class Node {
-  element: object
-  next: object | null
-  constructor(element: object) {
+  constructor(element) {
     this.element = element
     this.next = null
   }
 }
 class LinkedList {
-  head: object | null
-  length: number
   constructor() {
     this.head = null
     this.length = 0
