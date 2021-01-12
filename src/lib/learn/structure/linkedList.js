@@ -80,6 +80,18 @@ class LinkedList {
     }
     return i
   }
+  findAt(position) {
+    if (position >= 0 && position < this.length) {
+      let i = 0
+      let current = this.head
+      while(position > i) {
+        current = current.next 
+        i++
+      }
+      return current
+    }
+    return null
+  }
   remove(element) {
     const index = this.findIndex(element)
     this.removeAt(index)

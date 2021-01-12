@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { link } from "@/lib/learn/data-structure"
+import { link, stackData } from "@/lib/learn/data-structure"
 
 export default {
   props: {},
@@ -18,6 +18,11 @@ export default {
   },
   methods: {
     init() {
+      // this.linkInit()
+      this.stackInit()
+    },
+    // 链表练习
+    linkInit() {
       link.append('一个太空滑步')
       link.append('我的滑板鞋')
       link.append('网瘾少女')
@@ -33,6 +38,27 @@ export default {
       // console.log(link.findIndex('我的滑板鞋'))
       // link.remove('我的滑板鞋')
       // console.log(link.toString())
+    },
+    // 栈练习
+    stackInit() {
+      stackData.push(2)
+      stackData.push(3)
+      console.log('toString:', stackData.toString())
+      console.log('isEmpty:', stackData.isEmpty())
+      console.log('size', stackData.size())
+      console.log('栈顶', stackData.peek())
+      stackData.pop()
+      console.log("从栈顶删除一项");
+      console.log('toString:', stackData.toString())
+      console.log('isEmpty:', stackData.isEmpty())
+      console.log('size', stackData.size())
+      console.log('栈顶', stackData.peek())
+      stackData.clear()
+      console.log('清空栈');
+      console.log('toString:', stackData.toString())
+      console.log('isEmpty:', stackData.isEmpty())
+      console.log('size', stackData.size())
+      console.log('栈顶', stackData.peek())
     }
   },
 };
