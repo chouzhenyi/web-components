@@ -19,7 +19,8 @@ export default {
   methods: {
     init() {
       // this.linkInit()
-      this.stackInit()
+      // this.stackInit()
+      this.stackExercise()
     },
     // 链表练习
     linkInit() {
@@ -59,6 +60,38 @@ export default {
       console.log('isEmpty:', stackData.isEmpty())
       console.log('size', stackData.size())
       console.log('栈顶', stackData.peek())
+    },
+    stackExercise() {
+      const testCases = [
+        '{}', // true
+        '', // true
+        '(){<><)', // false
+        '({[<>]})', // true
+        '{]{}{}{[][][)(>>', // false
+      ]
+      for (let i = 0; i < testCases.length; i++) {
+        const item = testCases[i]
+        console.log(this.stackCheckSafe(item), item);
+      }
+    },
+    stackCheckSafe(str) {
+      const len = str.length
+      stackData.clear()
+      for(let i = 0; i < len; i++) {
+        const item = str[i]
+        const peek = stackData.peek()
+        const bracketsMap = new Map()
+        bracketsMap.set("}", "{")
+        bracketsMap.set("]", "[")
+        bracketsMap.set(")", "(")
+        bracketsMap.set(">", "<")
+        if(peek === bracketsMap.get(item)) {
+          stackData.pop()
+        } else {
+          stackData.push(item)
+        }
+      }
+      return !stackData.size()
     }
   },
 };
