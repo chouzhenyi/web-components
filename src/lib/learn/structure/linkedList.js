@@ -9,21 +9,6 @@ class LinkedList {
     this.head = null
     this.length = 0
   }
-  append(element) {
-    let current = null
-    const node = new Node(element)
-    if (this.head === null) {
-      this.head = node
-    } else {
-      current = this.head
-      while(current.next) {
-        current = current.next
-      }
-      current.next = node
-    }
-    this.length++
-    return true
-  }
   insert(position, element) {
     if(position >= 0 && position <= this.length ) {
       const node = new Node(element)
@@ -91,6 +76,9 @@ class LinkedList {
       return current
     }
     return null
+  }
+  append(element) {
+    return this.insert(0, element)
   }
   remove(element) {
     const index = this.findIndex(element)

@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { link, stackData } from "@/lib/learn/data-structure"
+import { link, stackData, doubly } from "@/lib/learn/data-structure"
 
 export default {
   props: {},
@@ -20,7 +20,8 @@ export default {
     init() {
       // this.linkInit()
       // this.stackInit()
-      this.stackExercise()
+      // this.stackExercise()
+      this.doublyLinkedListInit()
     },
     // 链表练习
     linkInit() {
@@ -92,6 +93,23 @@ export default {
         }
       }
       return !stackData.size()
+    },
+    // 双向链表
+    doublyLinkedListInit() {
+      let str = '测试双向链表4'
+      doubly.append('测试双向链表1')
+      doubly.append('测试双向链表2')
+      console.log(doubly.toString())
+      doubly.insert(1, '测试双向链表3')
+      console.log(doubly.toString())
+      doubly.removeAt(1)
+      doubly.insert(1, str)
+      console.log(doubly.toString())
+      console.log(doubly.findIndex(str));
+      console.log(doubly.findAt(1));
+      doubly.remove(str)
+      console.log(doubly.toString())
+      console.log(`isEmpty: ${doubly.isEmpty()}, size:${doubly.size()}`);
     }
   },
 };
