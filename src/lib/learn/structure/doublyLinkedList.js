@@ -85,4 +85,4 @@ class DoublyLinkedList extends LinkedList{
   }
 }
 
-export { DoublyLinkedList }
+export { DoublyLinkedList, Node }
