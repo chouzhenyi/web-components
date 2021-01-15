@@ -70,4 +70,4 @@ class CircularLinkedList extends DoublyLinkedList {
   }
 }
 
-export { CircularLinkedList }
+export default CircularLinkedList

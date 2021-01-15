@@ -1,4 +1,4 @@
-import { LinkedList } from "./linkedList"
+import LinkedList from "./linkedList"
 class Stack{
   constructor() {
     // 利用连标存储数据
@@ -40,4 +40,4 @@ class Stack{
   }
 }
 
-export { Stack }
+export default Stack

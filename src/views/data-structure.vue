@@ -22,7 +22,7 @@ export default {
       // this.stackInit()
       // this.stackExercise()
       // this.doublyLinkedListInit()
-      this.circularInit()
+      // this.circularInit()
     },
     // 链表练习
     linkInit() {

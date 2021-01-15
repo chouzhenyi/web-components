@@ -1,4 +1,4 @@
-import { LinkedList } from "./linkedList"
+import LinkedList from "./linkedList"
 class Node {
   constructor(element) {
     this.element = element
