@@ -67,6 +67,29 @@ function quick(list: Array<number>, left: number, right: number) {
     }
   }
 }
+
+// 堆排序相关
+function heapfy(list, length, i) {
+  const left = i * 2 + 1
+  const right = i * 2 + 2
+  let largest = i
+  if(left < length && list[left] > list[largest]) {
+    largest = left
+  }
+  if(right < length && list[right] > list[largest]) {
+    largest = right
+  }
+  if(largest !== i) {
+    [list[largest], list[i]] = [list[i], list[largest]]
+    heapfy(list, length, largest)
+  }
+}
+function buildHeap(list) {
+  const length = list.length
+  for(let i = Math.floor(length/2); i >= 0; i--) {
+    heapfy(list, length, i)
+  }
+}
 class algorithm {
   constructor() {
   }
@@ -141,6 +164,16 @@ class algorithm {
   }
   quickSort(list: Array<number>, left: number, right: number) {
     quick(list, left, right)
+    return list
+  }
+  heapSort(list: Array<number>) {
+    let length = list.length
+    buildHeap(list)
+    while(length > 1) {
+      length--
+      [list[0], list[length]] = [list[length], list[0]]
+      heapfy(list, length, 0)
+    }
     return list
   }
 }

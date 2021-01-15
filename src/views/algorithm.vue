@@ -31,6 +31,10 @@
       <div class="list-sort-wrapper">
         <div class="item" v-for="(item, index) in quickList" :key="index">{{item}}</div>
       </div>
+      <h3>堆</h3>
+      <div class="list-sort-wrapper">
+        <div class="item" v-for="(item, index) in heapList" :key="index">{{item}}</div>
+      </div>
     </div>
   </div>
 </template>
@@ -50,7 +54,7 @@ export default {
       mergeList: [],
       quickList: [],
       shellList: [],
-
+      heapList: [],
     };
   },
   computed: {},
@@ -67,7 +71,7 @@ export default {
       const list = this.creatNumList()
       this.list = list
       const factory = this.algorithmFactory
-      const { selection, insertion, bubbleSort, quickSort, shellSort } = factory
+      const { selection, insertion, bubbleSort, quickSort, shellSort, heapSort } = factory
       this.selectionList = selection(this.arrayCopy(list))
       this.insertionList = insertion(this.arrayCopy(list))
       this.bubbleList = bubbleSort(this.arrayCopy(list))
@@ -78,6 +82,9 @@ export default {
 
       // 希尔排序
       this.shellList = shellSort(this.arrayCopy(list))
+
+      // 堆排序
+      this.heapList = heapSort(this.arrayCopy(list))
 
     },
     creatNumList() {
