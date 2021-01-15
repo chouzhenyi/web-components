@@ -1,11 +1,10 @@
 <template>
   <div>
-    <h1>这结构</h1>
   </div>
 </template>
 
 <script>
-import { link, stackData, doubly, circular, queue } from "@/lib/learn/data-structure"
+import { link, stackData, doubly, circular, queue, priorityQueue } from "@/lib/learn/data-structure"
 
 export default {
   props: {},
@@ -23,7 +22,8 @@ export default {
       // this.stackExercise()
       // this.doublyLinkedListInit()
       // this.circularInit()
-      this.queueInit()
+      // this.queueInit()
+      this.priorityQueueInit()
     },
     // 链表练习
     linkInit() {
@@ -148,6 +148,26 @@ export default {
       console.log('front', queue.front());
       queue.clear()
       console.log('toString: ', queue.toString());
+    },
+    // 优先队列
+    priorityQueueInit() {
+      const str1 = '测试优先队列1'
+      const str2 = '测试优先队列2'
+      const str3 = '测试优先队列3'
+      priorityQueue.enqueue(str1, 10)
+      console.log(priorityQueue.toString());
+      priorityQueue.enqueue(str2, 1)
+      console.log(priorityQueue.toString());
+      priorityQueue.enqueue(str3, 5)
+      console.log(priorityQueue.toString());
+      priorityQueue.enqueue(str1, 50)
+      console.log(priorityQueue.toString());
+      priorityQueue.enqueue(str1, 45)
+      console.log(priorityQueue.toString());
+      priorityQueue.enqueue(str1, 0)
+      console.log(priorityQueue.toString());
+      priorityQueue.dequeue()
+      console.log(priorityQueue.toString());
     },
   },
 };
