@@ -41,10 +41,11 @@ function partition(list: Array<number>, left: number, right: number) {
   const pivot = list[Math.floor((left + right)/2)]
   let i = left
   let j = right
-  while(i < j) {
+  while(i <= j) {
     while(list[i] < pivot) {
       i++
     }
+    
     while(list[j] > pivot) {
       j--
     }
@@ -56,9 +57,11 @@ function partition(list: Array<number>, left: number, right: number) {
   }
   return i
 }
+
 function quick(list: Array<number>, left: number, right: number) {
   if (list.length) {
     const index = partition(list, left, right)
+    
     if (left < index - 1) {
       quick(list, left, index - 1)
     }
@@ -66,6 +69,7 @@ function quick(list: Array<number>, left: number, right: number) {
       quick(list, index, right)
     }
   }
+  return list
 }
 
 // 堆排序相关

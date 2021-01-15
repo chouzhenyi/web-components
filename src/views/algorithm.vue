@@ -112,7 +112,7 @@ export default {
   line-height: 24px;
   font-size: 16px;
   .item {
-    background: #5096f5;
+    background: rgba($color: #5096f5, $alpha: .7);
   }
 }
 </style>
