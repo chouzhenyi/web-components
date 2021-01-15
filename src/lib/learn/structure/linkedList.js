@@ -83,6 +83,11 @@ class LinkedList {
     const index = this.findIndex(element)
     this.removeAt(index)
   }
+  clear() {
+    while(this.length) {
+      this.removeAt(0)
+    }
+  }
   isEmpty() {
     return !this.length
   }

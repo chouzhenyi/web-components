@@ -66,7 +66,11 @@ class DoublyLinkedList extends LinkedList{
       if(position === 0) {
         current = current.next
         this.head = current
-        this.head.prev = null
+        if(this.head) {
+          this.head.prev = null
+        } else {
+          this.tail = null
+        }
       } else if(position === this.length - 1) {
         current = this.tail
         current = current.prev

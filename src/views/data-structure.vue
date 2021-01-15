@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { link, stackData, doubly, circular } from "@/lib/learn/data-structure"
+import { link, stackData, doubly, circular, queue } from "@/lib/learn/data-structure"
 
 export default {
   props: {},
@@ -23,6 +23,7 @@ export default {
       // this.stackExercise()
       // this.doublyLinkedListInit()
       // this.circularInit()
+      this.queueInit()
     },
     // 链表练习
     linkInit() {
@@ -126,6 +127,27 @@ export default {
       console.log(circular.toString())
       console.log('findIndex', circular.findIndex(str));
       console.log('findAt', circular.findAt(1));
+    },
+    // 队列
+    queueInit() {
+      const str1 = '测试队列1'
+      const str2 = '测试队列2'
+      const str3 = '测试队列3'
+      console.log('dequeue', queue.dequeue());
+      console.log('front', queue.front());
+      console.log('toString: ', queue.toString());
+      console.log('isEmpty:', queue.isEmpty());
+      queue.enqueue(str1)
+      queue.enqueue(str2)
+      queue.enqueue(str3)
+      console.log('toString: ', queue.toString());
+      console.log('size', queue.size());
+      queue.dequeue()
+      console.log('toString: ', queue.toString());
+      console.log('size', queue.size());
+      console.log('front', queue.front());
+      queue.clear()
+      console.log('toString: ', queue.toString());
     },
   },
 };
