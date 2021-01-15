@@ -56,12 +56,11 @@ class LinkedList {
   findIndex(element) {
     let current = this.head
     let i = -1
-    while(current) {
+    while(i++ < this.length) {
       if(current.element === element) {
-        return i + 1
+        return i
       }
       current = current.next
-      i++
     }
     return i
   }
@@ -94,7 +93,7 @@ class LinkedList {
     let current = this.head
     let results = ''
     let i = 0
-    while(current) {
+    while(i < this.length) {
       const element = current.element
       results += `${i}: ${typeof element === 'object' ? JSON.stringify(element) : element} => \n`
       current = current.next
