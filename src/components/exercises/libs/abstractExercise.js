@@ -46,7 +46,7 @@ class exerciseFactory {
     this.isEdit = !!isEdit
     this.data = data
     this.isShowGrayArea = isShowGrayArea
-    
+    this.showFooterAddExercisePopover = false
     this.setComplexBody()
   }
   // TODO: 这里要实现body 部分留出空隙给题型题号
@@ -70,7 +70,9 @@ class exerciseFactory {
       this.score = this.Score = targetScore || 1
     }
   }
-
+  showFooterAddExercisePopoverHandle(val) {
+    this.showFooterAddExercisePopover = !!val
+  }
 }
 
 export { exerciseFactory }

@@ -30,7 +30,7 @@
     <el-checkbox-group v-model="selects" @change="listCheckedChange">
       <draggable v-model="list" v-bind="dragOptions">
         <transition-group type="transition">
-          <div class="back-f table__item-wrapper" v-for="(item, index) in list" :key="item.template_id">
+          <div class="back-f table__item-wrapper" v-for="(item, index) in list" :key="item.template_id" @mouseleave="exerciseMouseLeave(item)">
             <div class="select-item__checkbox-wrapper" v-show="isBatchChange">
               <el-checkbox :key="item.template_id" :label="item.template_id" :value="item.template_id"></el-checkbox>
             </div>
@@ -45,11 +45,15 @@
                 <i class="iconfont icon-shanchu-" @click="editMoveDelHandle(3, index)"></i>
               </div>
               <list-item :index="index+1" :batchoptions="batchOptions" :options="item" @change="itemPropertyChange" :key="item.template_id"></list-item>
-              <div class="color50 text-center insert-exercise-wrapper">
-                <span class="pointer">
+              <div class="color50 text-center insert-exercise-wrapper" v-show="batchOptions.isUnfold">
+                <span class="pointer" @click="addExercise(item)">
                   <i class="iconfont icon--tianjiabanji ver-middle"></i>
                   <span class="font12 ver-middle">点击此处添加习题</span>
                 </span>
+                <div class="color6 font14 popover" v-show="item.showFooterAddExercisePopover">
+                  <div class="item" @click="batchAddExerciseHandle(0)">添加习题</div>
+                  <div class="item" @click="batchAddExerciseHandle(1)">批量导入</div>
+                </div>
               </div>
             </div>
           </div>
@@ -80,6 +84,7 @@ export default {
       selects: [],
       isBatchChange: false, // 是否批量操作习题 即：可勾选批量删除等
       isUnfold: true, // 是否展开习题
+      prevAddIndex: 0,
     };
   },
   computed: {
@@ -139,6 +144,7 @@ export default {
       })
       this.list = this.problemsIndexHandle(list)
     },
+    // 编辑、移动、删除单个习题
     editMoveDelHandle(type, index) {
       const item = this.list[index]
       console.log(item)
@@ -159,6 +165,31 @@ export default {
           this.list.splice(index, 1)
           break;
       }
+    },
+    // 添加习题
+    addExercise(item) {
+      item && item.showFooterAddExercisePopoverHandle && item.showFooterAddExercisePopoverHandle(1)
+    },
+    // 鼠标离开当前习题，注销当前习题之前需要展示的内容或行为
+    exerciseMouseLeave(item) {
+      if(item) {
+        item.showFooterAddExercisePopoverHandle && item.showFooterAddExercisePopoverHandle(0)
+      }
+    },
+    // 特定位置添加习题 type -- 0: 单个添加，1: 批量添加
+    batchAddExerciseHandle(type, index) {
+      // TODO: 这里具体实现
+      switch(type) {
+        case 0:
+          // 添加单个习题
+          break
+        case 1:
+          // 批量添加
+          break
+        default:
+
+      }
+      this.prevAddIndex = index
     },
   },
   components: {
@@ -230,11 +261,34 @@ export default {
     }
   }
   .insert-exercise-wrapper {
+    position: relative;
     border: 1px dashed $blue50;
     height: 24px;
     line-height: 24px;
     margin-right: 20px;
     visibility: hidden;
+    .popover {
+      position: absolute;
+      left: 50%;
+      top: 0;
+      transform: translate(-50%, calc(-100% - 20px));
+      background: #fff;
+      border-radius: 4px;
+      min-width: 150px;
+      padding: 5px 0;
+      z-index: 2000;
+      line-height: 34px;
+      word-break: break-all;
+      box-shadow: 0 2px 12px 0 rgba(0, 0, 0, .1);
+      text-align: center;
+      cursor: pointer;
+      .item {
+        &:hover {
+          background: rgba($color: $blue50, $alpha: .1);
+          color: $blue50;
+        }
+      }
+    }
   }
   &:hover {
     .insert-exercise-wrapper {
