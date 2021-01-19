@@ -1,13 +1,13 @@
 <template>
-  <div class="font14 wrapper">
+  <div class="font16 wrapper">
     <div class="item" v-for="(item, index) in list" :key="index">
       <!-- 题干 -->
       <div class="font18 type-text">{{item.TypeText}}</div>
       <div class="body-wrapper item__complex-body-wrapper" :class="{'body-fold': !batchoptions.isUnfold}" v-html="item.Body"></div>
-      <section v-show="batchoptions.isUnfold">
+      <section v-show="batchoptions.isUnfold" class="clear-fix">
         <!-- 选项 -->
         <div class="options-wrapper">
-          <div class="options__item-wrapper" 
+          <div class="clear-fix options__item-wrapper" 
             :class="{ 'judg-wrapper': item.Type === 'Judgement' }" 
             v-for="(option, oIndex) in item.Options" :key="oIndex"
             >
@@ -32,13 +32,19 @@
           </div>
         </div>
         <!-- 答案解析/填空题答案列表 -->
-        <div class="color6 gray-back-area" v-if="item.isShowGrayArea">
+        <div class="color6 font14 gray-back-area" v-if="item.isShowGrayArea">
           <template v-if="item.ProblemType === 4">
             <div class="blank-result-title font-weight-bold">答案</div>
             <div class="blank-result-wrapper">
               <div class="blank-result-item" v-for="blankItem in item.blanksResultTexts" :key="blankItem.num">
-                <span class="font-weight-bold">填空{{blankItem.num}}: </span>
-                <span>{{blankItem.text}}</span>
+                <div class="answer-text">
+                  <span class="font-weight-bold">填空{{blankItem.num}}: </span>
+                  <span>{{blankItem.text}}</span>
+                </div>
+                <div class="tag-wrapper">
+                  <div class="color-9b font12 tag" v-if="blankItem.FuzzyMatch">模糊匹配</div>
+                  <div class="color-9b font12 tag" v-if="blankItem.CaseSensitive">区分大小写</div>
+                </div>
               </div>
             </div>
           </template>
@@ -247,6 +253,7 @@ $blue: #5096F5;
     }
     .body-wrapper {
       line-height: 1.2;
+      padding-bottom: 20px;
       &.body-fold {
         max-height: 36px;
       }
@@ -255,7 +262,7 @@ $blue: #5096F5;
       border-bottom: 1px dashed #ddd;
       .options__item-wrapper {
         display: flex;
-        margin: 20px 0;
+        margin-bottom: 20px;
         line-height: 32px;
         font-size: 14px;
         .option-key {
@@ -314,7 +321,22 @@ $blue: #5096F5;
       }
       .blank-result-wrapper {
         .blank-result-item {
-          line-height: 24px;
+          display: flex;
+          line-height: 30px;
+          .answer-text {
+            flex: 1;
+          }
+          .tag-wrapper {
+            .tag {
+              display: inline-block;
+              vertical-align: middle;
+              margin-left: 8px;
+              padding: 0 8px;
+              border-radius: 4px;
+              line-height: 20px;
+              background: #e6e6e6;
+            }
+          }
         }
       }
       .folder {
