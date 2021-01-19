@@ -12,6 +12,7 @@ export default {
       return list.map(item => {
         return exerciseBuilder({
           ...item,
+          isShowGrayArea: this.isShowGrayAreaHandle(item)
         })
       })
     },
@@ -24,6 +25,10 @@ export default {
           key,
         }
       })
+    },
+    // 根据又没有答案解析和是不是填空题，决定是否展示灰色区域
+    isShowGrayAreaHandle({ Remark = '', ProblemType = 0 }) {
+      return !!Remark || ProblemType === 4
     },
     // TODO: 输出的习题数据整理
     outputListDataAdjust() {

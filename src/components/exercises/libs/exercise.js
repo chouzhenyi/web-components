@@ -61,6 +61,8 @@ class FillBlank extends exerciseFactory {
     this.Blanks = Blanks
     this.OrderInsensitive = !!OrderInsensitive
     this.Options = []
+    // 整理答案列表展示文案
+    this.blankResultTextHandle()
   }
   calculateScore() {
     const score = this.Blanks.reduce((total, item) => {
@@ -71,6 +73,26 @@ class FillBlank extends exerciseFactory {
   blankScoreChange({index, score}) {
     this.Blanks[index].score = this.Blanks[index].Score = scoreVerify(score)
     this.calculateScore()
+  }
+  blankResultTextHandle() {
+    const Blanks = this.Blanks || []
+    this.blanksResultTexts = Blanks.map((item, index) => {
+      const {
+        Answers,
+        CaseSensitive,
+        FuzzyMatch  
+      } = item
+      const text = Answers.reduce((prev, cur) => {
+        const delimiterText = prev ? ' / ' : ''
+        return `${prev}${delimiterText}${cur}`
+      }, '')
+      return {
+        CaseSensitive,
+        FuzzyMatch,
+        num: index + 1,
+        text,
+      }
+    })
   }
 }
 // 主观题

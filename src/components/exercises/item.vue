@@ -1,5 +1,5 @@
 <template>
-  <div class="font16 wrapper">
+  <div class="font14 wrapper">
     <div class="item" v-for="(item, index) in list" :key="index">
       <!-- 题干 -->
       <div class="font18 type-text">{{item.TypeText}}</div>
@@ -22,8 +22,8 @@
             </div>
             <div class="option__content" v-html="option.value"></div>
           </div>
-          <!-- 投票题没有答案解析 这里复用部分答案解析的样式 -->
-          <div class="remark-wrapper" v-if="item.ProblemType === 3">
+          <!-- 投票题没有答案解析 -->
+          <div class="gray-back-area vote-mode-wrapper" v-if="item.ProblemType === 3">
             <div class="inline-block font-weight500">投票模式：</div>
             <span v-if="item.PollingCount > 1" class="font12 color-9b vote-mode">
               多选：{{item.PollingCount}}项
@@ -31,14 +31,25 @@
             <span class="font12 color-9b vote-mode" v-else>单选</span>
           </div>
         </div>
-        <!-- 答案解析 -->
-        <div class="remark-wrapper" v-if="item.Remark">
-          <div class="folder" @click="item.remarkFold = !item.remarkFold">
-            <span>查看解析</span>
-            <i v-show="item.remarkFold" class="el-icon-arrow-up"></i>
-            <i v-show="!item.remarkFold" class="el-icon-arrow-down"></i>
-          </div>
-          <div v-html="item.Remark" v-show="!item.remarkFold"></div>
+        <!-- 答案解析/填空题答案列表 -->
+        <div class="color6 gray-back-area" v-if="item.isShowGrayArea">
+          <template v-if="item.ProblemType === 4">
+            <div class="blank-result-title font-weight-bold">答案</div>
+            <div class="blank-result-wrapper">
+              <div class="blank-result-item" v-for="blankItem in item.blanksResultTexts" :key="blankItem.num">
+                <span class="font-weight-bold">填空{{blankItem.num}}: </span>
+                <span>{{blankItem.text}}</span>
+              </div>
+            </div>
+          </template>
+          <template v-if="!!item.Remark">
+            <div class="folder" @click="item.remarkFold = !item.remarkFold">
+              <span>查看解析</span>
+              <i v-show="item.remarkFold" class="el-icon-arrow-up"></i>
+              <i v-show="!item.remarkFold" class="el-icon-arrow-down"></i>
+            </div>
+            <div v-html="item.Remark" v-show="!item.remarkFold"></div>
+          </template>
         </div>
         <div class="exercise-item__other-property-wrapper other-property-wrapper">
           <!-- 投票题是否计分 -->
@@ -175,7 +186,7 @@ export default {
         ...params,
         index: this.index,
       })
-    }
+    },
   },
   filters: {
     // 选项key 文案
@@ -280,24 +291,37 @@ $blue: #5096F5;
         display: inline-block;
       }
     }
-    .remark-wrapper {
+    .gray-back-area {
       margin-top: 20px;
-      padding: 10px;
+      padding: 10px 15px;
       line-height: 26px;
       background: #f5f5f5;
       border-radius: 4px;
-      font-size: 16px;
-      color: #333;
+      &.vote-mode-wrapper {
+        margin-bottom: 20px;
+        .vote-mode {
+          padding: 0 8px;
+          line-height: 20px;
+          background: #e6e6e6;
+        }
+      }
+      .font-weight-bold {
+        font-weight: bold;
+      }
+      .blank-result-title{
+        margin-bottom: 10px;
+        line-height: 20px;
+      }
+      .blank-result-wrapper {
+        .blank-result-item {
+          line-height: 24px;
+        }
+      }
       .folder {
         color: #5DA0FC;
-        font-size: 12px;
+        font-size: 14px;
         display: inline-block;
         cursor: pointer;
-      }
-      .vote-mode {
-        padding: 0 8px;
-        line-height: 20px;
-        background: #e6e6e6;
       }
     }
     .other-property-wrapper {
@@ -337,14 +361,6 @@ $blue: #5096F5;
         }
         &:last-child {
           padding-bottom: 0;
-        }
-      }
-    }
-    .blanks-list-wrapper {
-      .blank-item-wrapper {
-        display: flex;
-        .blank-label {
-          width: 114px;
         }
       }
     }

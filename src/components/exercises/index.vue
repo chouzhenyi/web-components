@@ -203,7 +203,7 @@ export default {
 .table__item-wrapper {
   flex: 1;
   display: flex;
-  padding-top: 20px;
+  padding: 20px 0 10px 0;
   border-bottom: 1px solid #c8c8c8;
   .select-item__checkbox-wrapper, .select-item__drag-wrapper {
     height: 20px;

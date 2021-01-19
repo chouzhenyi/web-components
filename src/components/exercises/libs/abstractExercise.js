@@ -21,7 +21,7 @@ class exerciseFactory {
     score = 1,
     isEdit = false,
     data = {},
-  
+    isShowGrayArea,
   }){
     score = Score
     this.key = key
@@ -45,6 +45,7 @@ class exerciseFactory {
     this.score = score
     this.isEdit = !!isEdit
     this.data = data
+    this.isShowGrayArea = isShowGrayArea
     
     this.setComplexBody()
   }
