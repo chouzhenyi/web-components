@@ -23,6 +23,9 @@ class exerciseFactory {
     data = {},
     isShowGrayArea,
   }){
+    // 音频地址替换
+    const { Body: cBody, Remark: cRemark, Options: cOptions } = this.audioUrlReplace({ Body, Remark, Options })
+
     score = Score
     this.key = key
     this.LibraryID = LibraryID
@@ -34,11 +37,11 @@ class exerciseFactory {
     this.ProblemType = +ProblemType
     this.Type = Type
     this.TypeText = TypeText
-    this.Body = Body
-    this.Options = Options || []
+    this.Body = cBody
+    this.Options = cOptions || []
     this.Answer = Answer || [],
     this.HasRemark = !HasRemark
-    this.Remark = Remark
+    this.Remark = cRemark
     this.remarkFold = true
     this.showScore = !!showScore
     this.Score = Score
@@ -59,6 +62,25 @@ class exerciseFactory {
       ${Body}
     `
     this.complexBody = complexBody
+  }
+  // 音频地址替换
+  audioUrlReplace({ Body, Options, Remark }) {
+    const tempOptions = Options instanceof Array ? Options.map(item => {
+      return {
+        ...item,
+        value: this.strLinkReplace(item.value),
+      }
+    }) : Options
+    return {
+      Body: this.strLinkReplace(Body),
+      Remark: this.strLinkReplace(Remark),
+      Options: tempOptions
+    }
+  }
+  strLinkReplace(str) {
+    const reg = /http:\/\/([a-z|A-Z|0-9]+)\.ykt\.io\/([a-z|A-Z|0-9]+)/g;
+    const targetStr = 'https://qn-$1.yuketang.cn/$2'
+    return `${str}`.replace(reg, targetStr);
   }
   // 设置、修改当前分数
   setScore(newScore) {
