@@ -1,18 +1,20 @@
 <template>
   <div class="wrapper">
     <div v-html="compositeContent"></div>
+    <div class="strategy-wrapper" v-html="strategyText"></div>
   </div>
 </template>
 
 <script>
 import { CompositeRender } from "@/lib/learn/composite.js"
+import { renderDataList } from "@/lib/learn/design-parttern.ts"
 
 export default {
   props: {},
   data() {
     return {
       compositeContent: '',
-
+      strategyText: ''
     };
   },
   computed: {},
@@ -22,6 +24,7 @@ export default {
   methods: {
     init() {
       this.compositInit()
+      this.renderList()
     },
     // 组合模式
     compositInit() {
@@ -59,6 +62,19 @@ export default {
 
       this.compositeContent = levelTop.render()
     },
+    // 策略模式展示一个列表
+    renderList() {
+      const list = [
+        '王富贵',
+        '是的',
+        '吃瓜太多'
+      ]
+      const {
+        listResult,
+        ulResult
+      } = renderDataList(list)
+      this.strategyText = listResult + ulResult
+    },
   },
 };
 </script>
@@ -89,6 +105,12 @@ export default {
     &:last-child {
       margin-bottom: 0;
     }
+  }
+}
+
+::v-deep .list {
+  .item {
+    
   }
 }
 </style>
