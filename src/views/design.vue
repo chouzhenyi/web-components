@@ -8,6 +8,7 @@
 <script>
 import { CompositeRender } from "@/lib/learn/composite.js"
 import { renderDataList } from "@/lib/learn/design-parttern.ts"
+import { clientProduct } from "@/lib/learn/design/factoryMethod"
 
 export default {
   props: {},
@@ -25,6 +26,8 @@ export default {
     init() {
       this.compositInit()
       this.renderList()
+
+      this.design()
     },
     // 组合模式
     compositInit() {
@@ -75,6 +78,10 @@ export default {
       } = renderDataList(list)
       this.strategyText = listResult + ulResult
     },
+    // 设计模式瞎练习
+    design() {
+      clientProduct()
+    }
   },
 };
 </script>
