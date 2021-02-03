@@ -9,6 +9,7 @@
 import { CompositeRender } from "@/lib/learn/composite.js"
 import { renderDataList } from "@/lib/learn/design-parttern.ts"
 import { clientProduct } from "@/lib/learn/design/factoryMethod"
+import { upper, lower } from "@/lib/learn/design/abstractFactory"
 
 export default {
   props: {},
@@ -81,6 +82,10 @@ export default {
     // 设计模式瞎练习
     design() {
       clientProduct()
+      // 抽象工厂执行
+      upper();
+      lower()
+      
     }
   },
 };
