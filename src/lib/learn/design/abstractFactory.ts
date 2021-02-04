@@ -66,7 +66,7 @@ class lowerVehicleFatory implements AbstractVehicleFactory {
 function clientVehicleHandle(factory: AbstractVehicleFactory, name:string) {
   const bus = factory.createBus(name)
   const car = factory.createCar(name)
-  console.log(`公交车的座位数${bus.setSeatCount(2)}`);
+  console.log(`公交车的座位数${bus.setSeatCount(20)}`);
   console.log(`轿车座椅要舒服：${car.setSeatCover('亚麻布')}`);
 }
 
